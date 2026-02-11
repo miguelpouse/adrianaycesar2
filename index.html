@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adriana & César | Nuestra Boda</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f8f2e8;
+            --accent: #b35528;
+            --dark: #1d2739;
+            --white: #ffffff;
+            --soft-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg); color: var(--dark); overflow-x: hidden; scroll-behavior: smooth; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* --- Reproductor de Música --- */
+        .music-control {
+            position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+            background: var(--accent); color: white; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2070') center/cover no-repeat;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: var(--white); text-align: center; padding: 20px;
+        }
+        .hero h1 { font-size: clamp(3.5rem, 10vw, 6.5rem); margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; letter-spacing: 5px; text-transform: uppercase; }
+
+        section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
+        .section-icon { color: var(--accent); font-size: 2rem; margin-bottom: 15px; }
+        h2 { font-size: 2.5rem; margin-bottom: 40px; position: relative; padding-bottom: 15px; }
+        h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 2px; background: var(--accent); }
+
+        /* --- Cuenta Regresiva --- */
+        .countdown-wrap { 
+            background: var(--white); border-radius: 20px; padding: 40px; 
+            box-shadow: var(--soft-shadow); margin-top: -60px; position: relative; 
+            z-index: 10; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; 
+        }
+        .timer-unit span { display: block; font-size: 2.5rem; font-weight: bold; color: var(--accent); font-family: 'Playfair Display'; }
+
+        /* --- Carrusel Automático --- */
+        .gallery-container { width: 100%; overflow: hidden; padding: 40px 0; background: var(--white); }
+        .gallery-track { display: flex; width: calc(300px * 12); animation: scroll-nonstop 40s linear infinite; }
+        .gallery-track:hover { animation-play-state: paused; }
+        .gallery-item { width: 300px; height: 400px; flex-shrink: 0; padding: 0 10px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; }
+        @keyframes scroll-nonstop { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-300px * 6)); } }
+
+        /* --- Dress Code --- */
+        .dress-code-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+        .dress-card { background: var(--white); padding: 40px; border-radius: 15px; box-shadow: var(--soft-shadow); }
+        .dress-card i { font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
+        .dress-card h3 { margin-bottom: 15px; color: var(--dark); }
+        .color-dots { display: flex; justify-content: center; gap: 10px; margin: 15px 0; }
+        .dot { width: 25px; height: 25px; border-radius: 50%; border: 2px solid var(--white); outline: 1px solid #ddd; }
+
+        /* --- Detalles Finales (Horarios & No niños) --- */
+        .details-box { background: var(--dark); color: var(--white); padding: 60px 40px; border-radius: 20px; margin-top: 50px; }
+        .timeline { list-style: none; margin: 30px auto; max-width: 400px; text-align: left; }
+        .timeline li { margin-bottom: 15px; padding-left: 20px; border-left: 2px solid var(--accent); display: flex; justify-content: space-between; }
+        .no-kids { margin-top: 30px; font-style: italic; border: 1px dashed var(--accent); padding: 20px; border-radius: 10px; }
+
+        /* --- Mapas --- */
+        .map-container { width: 100%; height: 250px; margin: 20px 0; border-radius: 10px; overflow: hidden; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* --- Botones --- */
+        .btn { display: inline-block; padding: 15px 35px; background: var(--accent); color: white; text-decoration: none; border-radius: 50px; transition: 0.3s; border: 1px solid var(--accent); font-weight: 600; }
+        .btn:hover { background: transparent; color: var(--accent); }
+        .btn-whatsapp { background: #25d366; border-color: #25d366; margin-top: 20px; }
+        .btn-whatsapp:hover { color: #25d366; }
+
+        footer { background: var(--dark); color: var(--bg); padding: 60px 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <!-- Música -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/Rain-and-Flowers-Selection.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-control" onclick="toggleMusic()">
+        <i id="musicIcon" class="fas fa-music"></i>
+    </button>
+
+    <header class="hero">
+        <h1 data-aos="zoom-in" data-aos-duration="2000">Adriana & César</h1>
+        <p data-aos="fade-up">¡Nos casamos! • 14.11.2026</p>
+    </header>
+
+    <section>
+        <div class="countdown-wrap" data-aos="fade-up">
+            <div class="timer-unit"><span id="days">00</span>Días</div>
+            <div class="timer-unit"><span id="hours">00</span>Horas</div>
+            <div class="timer-unit"><span id="minutes">00</span>Min</div>
+            <div class="timer-unit"><span id="seconds">00</span>Seg</div>
+        </div>
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Adriana+y+Cesar&dates=20261114T230000Z/20261115T060000Z&location=Xochimilco" class="btn" style="margin-top: 40px;" data-aos="fade-up">
+            <i class="far fa-calendar-alt"></i> Agendar fecha
+        </a>
+    </section>
+
+    <!-- Carrusel Automático -->
+    <div class="gallery-container" data-aos="fade-in">
+        <div class="gallery-track">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1522673607200-164883eecd0c?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600"></div>
+            <!-- Duplicados -->
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=600"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600"></div>
+        </div>
+    </div>
+
+    <!-- Dress Code -->
+    <section id="dresscode">
+        <div class="section-icon"><i class="fas fa-user-tie"></i></div>
+        <h2 data-aos="fade-up">Código de Vestimenta</h2>
+        <p>FORMAL • ETIQUETA</p>
+        <p>Queremos que luzcas increíble, aquí tienes algunas sugerencias basadas en nuestra paleta de colores:</p>
+        
+        <div class="dress-code-container">
+            <!-- Mujeres -->
+            <div class="dress-card" data-aos="fade-right">
+                <i class="fas fa-female"></i>
+                <h3>Damas</h3>
+                <p>Vestido largo. Te sugerimos tonos cálidos como el terracota o neutros elegantes.</p>
+                <div class="color-dots">
+                    <div class="dot" style="background: #b35528;"></div> <!-- Terracota -->
+                    <div class="dot" style="background: #e28743;"></div> <!-- Naranja suave -->
+                    <div class="dot" style="background: #f8f2e8;"></div> <!-- Crema -->
+                </div>
+                <small>* Por respeto a la novia, evitar el color blanco.</small>
+            </div>
+            <!-- Hombres -->
+            <div class="dress-card" data-aos="fade-left">
+                <i class="fas fa-male"></i>
+                <h3>Caballeros</h3>
+                <p>Traje completo. Los tonos oscuros como azul marino o gris oxford son ideales.</p>
+                <div class="color-dots">
+                    <div class="dot" style="background: #1d2739;"></div> <!-- Azul Oscuro -->
+                    <div class="dot" style="background: #333;"></div>    <!-- Negro/Gris -->
+                    <div class="dot" style="background: #b35528;"></div> <!-- Detalle en corbata -->
+                </div>
+                <small>* Corbata o moño sugerido.</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lugares -->
+    <section id="lugares">
+        <div class="section-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <h2 data-aos="fade-up">Ubicaciones</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <div class="location-card" data-aos="fade-up">
+                <h3>Ceremonia Religiosa</h3>
+                <p>Catedral de Xochimilco | 17:00 hrs</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m12!1m3!1d3766.191593466107!2d-99.1039535!3d19.2631778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce03f8f12a209b%3A0x6d859a117b07d57a!2sCatedral%20de%20San%20Bernardino%20de%20Siena!5e0!3m2!1ses!2smx!4v1700000000000"></iframe>
+                </div>
+            </div>
+            <div class="location-card" data-aos="fade-up">
+                <h3>Recepción</h3>
+                <p>Salón Bamboo | 19:00 hrs</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m12!1m3!1d3767.1415178652433!2d-99.1171457!3d19.2315752!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce03975d94709d%3A0x8843c080777e5d16!2sSalon%20Bamboo!5e0!3m2!1ses!2smx!4v1700000000000"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detalles e Itinerario -->
+    <section id="detalles" data-aos="zoom-in">
+        <div class="details-box">
+            <div class="section-icon" style="color: var(--white);"><i class="fas fa-info-circle"></i></div>
+            <h2>Detalles Importantes</h2>
+            
+            <h3>Itinerario de Recepción</h3>
+            <ul class="timeline">
+                <li><span>19:00 hrs</span> <span>Cóctel de Bienvenida</span></li>
+                <li><span>20:30 hrs</span> <span>Cena de Gala</span></li>
+                <li><span>22:00 hrs</span> <span>Apertura de Pista</span></li>
+                <li><span>02:00 hrs</span> <span>Fin de la Celebración</span></li>
+            </ul>
+
+            <div class="no-kids">
+                <p><i class="fas fa-child-slash"></i> <strong>Evento para Adultos</strong></p>
+                <p>Amamos a sus pequeños, pero para que todos podamos disfrutar al máximo, hemos decidido que nuestra boda sea una celebración solo para adultos.</p>
+            </div>
+
+            <p style="margin-top: 40px;">¿Tienes alguna duda sobre el evento?</p>
+            <a href="https://wa.me/521234567890?text=Hola!%20Tengo%20una%20duda%20sobre%20la%20boda" class="btn btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i> Preguntas Frecuentes (FAQs)
+            </a>
+        </div>
+    </section>
+
+    <!-- Mesa de Regalos -->
+    <section id="regalos" data-aos="fade-up">
+        <div class="section-icon"><i class="fas fa-gift"></i></div>
+        <h2>Mesa de Regalos</h2>
+        <p>Su presencia es el mejor regalo, pero si desean tener un detalle con nosotros:</p>
+        <div style="margin-top: 30px; display: flex; justify-content: center; gap: 15px;">
+            <a href="#" class="btn" style="background: var(--dark);">LIVERPOOL</a>
+            <a href="#" class="btn" style="background: var(--dark);">AMAZON</a>
+        </div>
+    </section>
+
+    <footer>
+        <p style="font-family: 'Playfair Display'; font-size: 2.5rem; color: white;">A & C</p>
+        <p>14 • 11 • 2026</p>
+        <div style="margin: 20px auto; width: 50px; height: 1px; background: var(--accent);"></div>
+        <p style="font-size: 0.8rem; opacity: 0.6;">Gracias por ser parte de nuestra historia.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: true });
+
+        // Cuenta Regresiva
+        const weddingDate = new Date("Nov 14, 2026 17:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+
+        function toggleMusic() {
+            const audio = document.getElementById("bgMusic");
+            const icon = document.getElementById("musicIcon");
+            if (audio.paused) { audio.play(); icon.classList.replace("fa-music", "fa-pause"); }
+            else { audio.pause(); icon.classList.replace("fa-pause", "fa-music"); }
+        }
+    </script>
+</body>
+</html>
